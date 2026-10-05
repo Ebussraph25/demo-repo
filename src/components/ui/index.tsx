@@ -54,7 +54,7 @@ export function ProjectCard({ project, aspect = "aspect-[4/5]", priority = false
   return (
     <Link href={`/projects/${project.slug}`} className="group block" data-track="project_card_click">
       <div className={cn("zoom-wrap reveal-img relative bg-beige", aspect)}>
-        <Image src={project.thumbnail} alt={`${project.title} — ${project.type} in ${project.location}`} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image src={project.thumbnail} alt={project.gallery[0]?.alt ?? project.title} fill sizes={sizes} priority={priority} className="object-cover" />
         <div className="absolute inset-0 bg-charcoal/0 transition-colors duration-700 group-hover:bg-charcoal/35" />
         <span className="absolute bottom-6 left-6 flex translate-y-3 items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-white opacity-0 transition-all duration-700 group-hover:translate-y-0 group-hover:opacity-100">
           View Project <Arrow />
@@ -63,9 +63,9 @@ export function ProjectCard({ project, aspect = "aspect-[4/5]", priority = false
       <div className="reveal mt-5 flex items-start justify-between gap-6 border-t border-line pt-4">
         <div>
           <h3 className="text-2xl md:text-[1.75rem]">{project.title}</h3>
-          <p className="mt-1 text-sm text-stone-ink">{project.type} · {project.location}</p>
+          <p className="mt-1 text-sm text-stone-ink">{[project.type, project.location].filter(Boolean).join(" · ")}</p>
         </div>
-        <span className="pt-1.5 text-xs tracking-[0.2em] text-stone-ink">{project.year}</span>
+        <span className="pt-1.5 text-[0.65rem] uppercase tracking-[0.2em] text-bronze">{project.year ?? project.categories[0]}</span>
       </div>
     </Link>
   );

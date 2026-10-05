@@ -238,7 +238,15 @@
   background-size: 80px 80px;
 }
 
+
+/* Continuous ticker + gallery band (paused on hover, disabled for reduced motion) */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee { animation: marquee 40s linear infinite; }
+.gallery-band { animation: marquee 90s linear infinite; }
+.gallery-band:hover, .gallery-band:focus-within { animation-play-state: paused; }
+
 @media (prefers-reduced-motion: reduce) {
+  .marquee, .gallery-band { animation: none; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-delay: 0s !important; transition-delay: 0s !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal { opacity: 1; transform: none; }

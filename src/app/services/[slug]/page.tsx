@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getService, services } from "@/content/services";
-import { getProject, photoIds as I } from "@/content/projects";
-import { img, site } from "@/lib/site";
+import { getProject, photo } from "@/content/projects";
+import { site } from "@/lib/site";
 import { breadcrumbSchema, pageMeta } from "@/lib/seo";
 import { Breadcrumbs, CTABanner, FAQ, JsonLd, PageHero, ProjectCard, SectionHeader } from "@/components/ui";
 import { homeProcess } from "@/content/company";
@@ -95,7 +95,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
         </div>
       </section>
 
-      <CTABanner image={img(I.loungeNeutral, 2400)} title="Let's Discuss Your Project." primaryLabel="Schedule a Consultation" />
+      <CTABanner image={photo("canopy-apartment", 2)} title="Let's Discuss Your Project." primaryLabel="Schedule a Consultation" />
 
       <JsonLd
         data={[

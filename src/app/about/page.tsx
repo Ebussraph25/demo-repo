@@ -1,7 +1,6 @@
 import Image from "next/image";
-import { photoIds as I } from "@/content/projects";
+import { photo } from "@/content/projects";
 import { brandPromise, values } from "@/content/company";
-import { img } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 import { CTABanner, PageHero, SectionHeader } from "@/components/ui";
 
@@ -9,7 +8,7 @@ export const metadata = pageMeta({
   title: "About",
   description: "Alfred Pederson is a design-led architecture, building and interior design studio creating functional, refined and timeless spaces.",
   path: "/about",
-  image: img(I.interiorCalm, 1200),
+  image: photo("executive-headquarters", 3),
 });
 
 const philosophy = [
@@ -28,8 +27,8 @@ export default function AboutPage() {
         eyebrow="About Alfred Pederson"
         title={<>Designing Spaces <em className="italic text-beige">With Purpose.</em></>}
         intro="A design-led building and interior specialist creating functional, refined and timeless spaces tailored to how clients live, work and experience their environments."
-        image={img(I.interiorCalm, 2400)}
-        imageAlt="Calm, light-filled interior with natural textures"
+        image={photo("executive-headquarters", 3)}
+        imageAlt="Boardroom with textured stone-look walls and leather chairs"
       />
 
       {/* Story */}
@@ -45,9 +44,9 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="container-x mt-20 grid gap-6 md:grid-cols-3">
-          {[I.kitchenOak, I.diningRoom, I.bedroomSoft].map((id, i) => (
+          {[photo("courtyard-house"), photo("treehouse-early-learning"), photo("color-studies-residence", 2)].map((id, i) => (
             <div key={id} className={`reveal-img relative aspect-[3/4] bg-beige ${i === 1 ? "md:mt-20" : ""}`} style={{ ["--d" as string]: `${i * 120}ms` }}>
-              <Image src={img(id, 1200)} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />
+              <Image src={id} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />
             </div>
           ))}
         </div>
@@ -113,7 +112,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <CTABanner image={img(I.livingWide, 2400)} />
+      <CTABanner image={photo("city-workplace", 2)} />
     </>
   );
 }

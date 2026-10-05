@@ -35,6 +35,3 @@ export const nav = [
   { label: "Contact", href: "/contact" },
 ];
 
-/** Unsplash placeholder photography — swap for real project photography via the CMS. */
-export const img = (id: string, w = 1600) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;

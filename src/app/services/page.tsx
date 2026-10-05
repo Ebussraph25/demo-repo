@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { services } from "@/content/services";
-import { photoIds as I } from "@/content/projects";
-import { img, site } from "@/lib/site";
+import { photo } from "@/content/projects";
+import { site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 import { Arrow, CTABanner, FAQ, JsonLd, PageHero, SectionHeader } from "@/components/ui";
 
@@ -10,7 +10,7 @@ export const metadata = pageMeta({
   title: "Services",
   description: "Architectural design, interior design, residential and commercial design, renovation and remodeling, and construction consulting.",
   path: "/services",
-  image: img(I.officeBright, 1200),
+  image: photo("city-workplace"),
 });
 
 export default function ServicesPage() {
@@ -20,8 +20,8 @@ export default function ServicesPage() {
         eyebrow="Services"
         title={<>Integrated design, <em className="italic text-beige">from plan to finish.</em></>}
         intro="Architecture, interiors and building expertise under one considered approach — so your project is designed and delivered with the same care."
-        image={img(I.kitchenWhite, 2400)}
-        imageAlt="Refined contemporary kitchen with natural light"
+        image={photo("executive-headquarters", 2)}
+        imageAlt="Client bar with stone-topped island and floor-to-ceiling glazing"
       />
 
       <section className="py-20 md:py-28">
@@ -64,7 +64,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <CTABanner image={img(I.diningRoom, 2400)} />
+      <CTABanner image={photo("community-dining-hall")} />
 
       <JsonLd
         data={services.map((s) => ({

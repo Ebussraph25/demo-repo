@@ -53,14 +53,14 @@ For Search Console, set `GOOGLE_SITE_VERIFICATION` or verify via DNS, then submi
 The content files follow the PRD CMS structures, so they map 1:1 onto Sanity/Contentful schemas when you're ready for a no-code admin (PRD §47).
 
 ## ⚠️ Replace before launch
-- **Photography:** all images are Unsplash placeholders. Swap in real project photography (min 2000px wide, PRD §67) — before/after slider currently uses a simulated "before" treatment; use real before photos.
-- **Projects:** the 8 case studies are conceptual showcase content.
+- **Project details:** the 11 case studies use Alfred's photography (`public/projects/<slug>/`). Descriptions are written from the photos — confirm them with Alfred and add `location`, `year` and `size` in `src/content/projects.ts` (they appear automatically).
+- **Before & After:** removed until real before/after photo pairs are available.
 - **Testimonials:** the section is hidden until real client testimonials are added to `src/content/company.ts`; it then appears automatically.
 - **Legal pages:** general templates; have them reviewed by an attorney.
 - **Social links:** empty by default (hidden). Add only actively maintained platforms.
 
 ## What's included
-- Pages: Home (PRD §59 order), About, Services + 6 service pages, Projects (filterable) + 8 case studies with lightbox gallery, Process (10 stages), Insights + 8 articles, Contact, Privacy, Terms, Accessibility, Cookie Policy, branded 404.
+- Pages: Home (PRD §59 order), About, Services + 6 service pages, Projects (filterable) + 11 case studies with lightbox gallery, Process (10 stages), Insights + 8 articles, Contact, Privacy, Terms, Accessibility, Cookie Policy, branded 404.
 - Vector logo recreated from the supplied mark (`src/components/brand/Logo.tsx`); original PNG in `public/brand/`.
 - Sticky header (transparent over images → solid on scroll), full-screen mobile menu, click-to-call everywhere.
 - Enquiry form: all PRD §28 fields, PDF/JPG/PNG uploads (3 files / 4 MB), inline validation, consent checkbox, success state.

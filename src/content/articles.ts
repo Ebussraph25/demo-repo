@@ -1,5 +1,4 @@
-import { img } from "@/lib/site";
-import { photoIds as I } from "./projects";
+import { photo } from "./projects";
 
 export type Block =
   | { type: "p"; text: string }
@@ -31,8 +30,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-09-18",
     readMinutes: 7,
-    hero: img(I.kitchenOak, 2000),
-    relatedProjectSlugs: ["silver-lake-modern", "highland-park-kitchen"],
+    hero: photo("glasshouse-loft", 1),
+    relatedProjectSlugs: ["glasshouse-loft", "color-studies-residence"],
     body: [
       { type: "p", text: "A renovation is one of the most rewarding investments you can make in a home — and one of the easiest to underestimate. A little structured thinking at the start saves time, money and stress later." },
       { type: "h2", text: "Start with how you live" },
@@ -63,8 +62,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-08-27",
     readMinutes: 6,
-    hero: img(I.livingWide, 2000),
-    relatedProjectSlugs: ["silver-lake-modern"],
+    hero: photo("color-studies-residence", 2),
+    relatedProjectSlugs: ["color-studies-residence", "glasshouse-loft"],
     body: [
       { type: "p", text: "Successful remodels share one trait: a plan that is decided before construction begins. Here is how we structure that plan with our clients." },
       { type: "h2", text: "1. Discovery and scope" },
@@ -85,8 +84,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-08-06",
     readMinutes: 5,
-    hero: img(I.livingWarm, 2000),
-    relatedProjectSlugs: ["laurel-terrace-apartment"],
+    hero: photo("color-studies-residence", 3),
+    relatedProjectSlugs: ["color-studies-residence", "canopy-apartment"],
     body: [
       { type: "p", text: "Trends come and go, but some reflect genuine shifts in how we live. Those are worth building in; the rest belong in pieces you can swap." },
       { type: "h2", text: "Worth the investment" },
@@ -103,8 +102,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-07-15",
     readMinutes: 5,
-    hero: img(I.lampRoom, 2000),
-    relatedProjectSlugs: ["ember-and-oak-restaurant", "laurel-terrace-apartment"],
+    hero: photo("executive-headquarters", 1),
+    relatedProjectSlugs: ["executive-headquarters", "community-dining-hall"],
     body: [
       { type: "p", text: "Two identical rooms can feel completely different under different light. Lighting shapes mood, highlights materials and determines how comfortable a space is to use." },
       { type: "h2", text: "Think in layers" },
@@ -121,8 +120,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-06-24",
     readMinutes: 6,
-    hero: img(I.bathStone, 2000),
-    relatedProjectSlugs: ["brentwood-spa-bath", "canyon-ridge-residence"],
+    hero: photo("city-workplace", 1),
+    relatedProjectSlugs: ["city-workplace", "courtyard-house"],
     body: [
       { type: "p", text: "Materials are what you touch every day. Choosing well means looking past the sample board to how a surface will perform over years of use." },
       { type: "h2", text: "Four questions for every material" },
@@ -139,8 +138,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-06-03",
     readMinutes: 5,
-    hero: img(I.apartmentLiving, 2000),
-    relatedProjectSlugs: ["silver-lake-modern", "highland-park-kitchen"],
+    hero: photo("canopy-apartment", 2),
+    relatedProjectSlugs: ["canopy-apartment", "glasshouse-loft"],
     body: [
       { type: "p", text: "Open plans bring light and connection; defined rooms bring privacy and acoustic comfort. The right answer depends on how your household lives." },
       { type: "h2", text: "The case for open" },
@@ -159,8 +158,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-05-13",
     readMinutes: 6,
-    hero: img(I.kitchenIsland, 2000),
-    relatedProjectSlugs: ["highland-park-kitchen", "brentwood-spa-bath"],
+    hero: photo("courtyard-house", 1),
+    relatedProjectSlugs: ["courtyard-house", "bush-pavilion-house"],
     body: [
       { type: "p", text: "A good budget isn't just a number — it is a plan for where money will make the biggest difference." },
       { type: "h2", text: "Build the budget in layers" },
@@ -177,8 +176,8 @@ export const articles: Article[] = [
     author: "Alfred Pederson",
     date: "2026-04-22",
     readMinutes: 5,
-    hero: img(I.interiorCalm, 2000),
-    relatedProjectSlugs: ["laurel-terrace-apartment"],
+    hero: photo("canopy-apartment", 1),
+    relatedProjectSlugs: ["canopy-apartment", "color-studies-residence"],
     body: [
       { type: "p", text: "Working with a designer should feel like a collaboration: you bring knowledge of how you live, we bring the expertise to turn that into a complete space." },
       { type: "h2", text: "What we'll ask of you" },

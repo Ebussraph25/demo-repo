@@ -31,16 +31,16 @@ export function Gallery({ images }: { images: { src: string; alt: string }[] }) 
 
   return (
     <>
-      <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6">
+      <div className={images.length === 1 ? "" : images.length === 2 ? "columns-1 gap-6 sm:columns-2 [&>*]:mb-6" : "columns-1 gap-6 sm:columns-2 lg:columns-3 [&>*]:mb-6"}>
         {images.map((im, i) => (
           <button
             key={im.src + i}
             onClick={(e) => { lastTrigger.current = e.currentTarget; setOpen(i); }}
             className="zoom-wrap reveal-img relative block w-full break-inside-avoid bg-beige"
-            style={{ aspectRatio: [4 / 5, 4 / 3, 1, 3 / 4, 16 / 10][i % 5] }}
+            style={{ aspectRatio: images.length === 1 ? "16 / 9" : [4 / 3, 4 / 5, 3 / 2][i % 3] }}
             aria-label={`Open image ${i + 1} of ${images.length}: ${im.alt}`}
           >
-            <Image src={im.src.replace("w=1600", "w=1000")} alt={im.alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" />
+            <Image src={im.src} alt={im.alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" />
           </button>
         ))}
       </div>
@@ -55,7 +55,7 @@ export function Gallery({ images }: { images: { src: string; alt: string }[] }) 
         {open !== null && (
           <div className="relative flex h-full w-full items-center justify-center p-4 md:p-16">
             <div className="relative h-full w-full">
-              <Image src={images[open].src.replace("w=1600", "w=2400")} alt={images[open].alt} fill sizes="100vw" className="object-contain" />
+              <Image src={images[open].src} alt={images[open].alt} fill sizes="100vw" className="object-contain" />
             </div>
             <button onClick={close} className="absolute right-4 top-4 grid h-12 w-12 place-items-center text-3xl font-light" aria-label="Close viewer">×</button>
             <button onClick={() => step(-1)} className="absolute left-2 top-1/2 grid h-12 w-12 -translate-y-1/2 place-items-center text-2xl md:left-6" aria-label="Previous image">‹</button>

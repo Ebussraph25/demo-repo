@@ -38,7 +38,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   return (
     <>
       <TrackView event="project_case_study_view" params={{ project: p.slug }} />
-      <PageHero eyebrow={p.type} title={p.title} image={p.hero} imageAlt={`${p.title}, ${p.location}`}>
+      <PageHero eyebrow={p.type} title={p.title} intro={p.summary} image={p.hero} imageAlt={p.gallery[0]?.alt ?? p.title}>
         <div className="mt-10">
           <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Projects", href: "/projects" }, { label: p.title }]} />
         </div>
@@ -46,14 +46,15 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
       {/* Project information panel */}
       <section className="border-b border-line bg-white">
-        <dl className="container-x grid grid-cols-2 gap-y-8 py-10 md:grid-cols-5">
-          {[
-            ["Location", p.location],
+        <dl className="container-x grid grid-cols-2 gap-y-8 py-10 md:grid-cols-4">
+          {([
             ["Project Type", p.type],
-            ["Year", String(p.year)],
-            ["Size", p.size ?? "—"],
+            ["Sector", p.categories.join(" · ")],
+            ["Location", p.location],
+            ["Year", p.year ? String(p.year) : undefined],
+            ["Size", p.size],
             ["Services", p.services.join(", ")],
-          ].map(([k, v]) => (
+          ].filter(([, v]) => v) as [string, string][]).map(([k, v]) => (
             <div key={k} className="pr-6">
               <dt className="eyebrow !text-[0.62rem] text-stone-ink">{k}</dt>
               <dd className="mt-2 text-sm leading-relaxed">{v}</dd>
@@ -94,7 +95,10 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
       <section className="py-24 md:py-32">
         <div className="container-x">
-          <h2 className="reveal mb-14 text-4xl md:text-6xl">Project Gallery</h2>
+          <div className="mb-14 flex items-end justify-between gap-6">
+            <h2 className="reveal text-4xl md:text-6xl">Project Gallery</h2>
+            <p className="reveal text-xs uppercase tracking-[0.2em] text-stone-ink">{p.gallery.length} {p.gallery.length === 1 ? "image" : "images"}</p>
+          </div>
           <Gallery images={p.gallery} />
         </div>
       </section>
@@ -138,8 +142,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             name: p.title,
             description: p.seoDescription,
             image: p.gallery.map((g) => g.src),
-            dateCreated: String(p.year),
-            locationCreated: { "@type": "Place", name: p.location },
+            ...(p.year ? { dateCreated: String(p.year) } : {}),
+            ...(p.location ? { locationCreated: { "@type": "Place", name: p.location } } : {}),
             creator: { "@id": `${site.url}/#organization` },
             url: `${site.url}/projects/${p.slug}`,
           },

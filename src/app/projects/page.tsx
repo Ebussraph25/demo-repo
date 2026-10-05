@@ -1,5 +1,4 @@
-import { projects, photoIds as I } from "@/content/projects";
-import { img } from "@/lib/site";
+import { projects, photo } from "@/content/projects";
 import { pageMeta } from "@/lib/seo";
 import { CTABanner, LightHero } from "@/components/ui";
 import { ProjectGrid } from "@/components/ui/ProjectGrid";
@@ -8,7 +7,7 @@ export const metadata = pageMeta({
   title: "Projects",
   description: "Residential, commercial, interior, renovation and architectural projects by Alfred Pederson.",
   path: "/projects",
-  image: img(I.poolHouse, 1200),
+  image: photo("courtyard-house"),
 });
 
 export default function ProjectsPage() {
@@ -24,7 +23,7 @@ export default function ProjectsPage() {
           <ProjectGrid projects={projects} />
         </div>
       </section>
-      <CTABanner image={img(I.houseDusk, 2400)} title="Have a Similar Project in Mind?" />
+      <CTABanner image={photo("bush-pavilion-house")} title="Have a Similar Project in Mind?" />
     </>
   );
 }

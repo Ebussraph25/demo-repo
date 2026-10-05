@@ -1,6 +1,5 @@
 import { fullProcess } from "@/content/company";
-import { photoIds as I } from "@/content/projects";
-import { img } from "@/lib/site";
+import { photo } from "@/content/projects";
 import { pageMeta } from "@/lib/seo";
 import { CTABanner, FAQ, PageHero, SectionHeader } from "@/components/ui";
 
@@ -8,7 +7,7 @@ export const metadata = pageMeta({
   title: "Our Process",
   description: "From discovery to project completion — the ten-stage process Alfred Pederson uses to design and deliver residential and commercial spaces.",
   path: "/process",
-  image: img(I.interiorStair, 1200),
+  image: photo("woven-pavilion"),
 });
 
 const phases = [
@@ -24,8 +23,8 @@ export default function ProcessPage() {
         eyebrow="Our Process"
         title={<>From Vision <em className="italic text-beige">to Reality.</em></>}
         intro="A structured, transparent journey in ten stages. You'll always know where your project stands, what comes next and which decisions are needed."
-        image={img(I.interiorStair, 2400)}
-        imageAlt="Architectural staircase in a refined interior"
+        image={photo("woven-pavilion")}
+        imageAlt="Woven timber pavilion screen casting patterned shade"
       />
 
       {/* Phase overview progress bar */}
@@ -78,7 +77,7 @@ export default function ProcessPage() {
         </div>
       </section>
 
-      <CTABanner image={img(I.kitchenWhite, 2400)} title="Ready to Begin?" text="The first step is a conversation. Tell us about your project and we'll guide you through what comes next." />
+      <CTABanner image={photo("glasshouse-loft")} title="Ready to Begin?" text="The first step is a conversation. Tell us about your project and we'll guide you through what comes next." />
     </>
   );
 }
