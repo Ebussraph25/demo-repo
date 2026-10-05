@@ -50,7 +50,7 @@ const orgSchema = {
   "@id": `${site.url}/#organization`,
   name: site.name,
   url: site.url,
-  logo: `${site.url}/brand/alfred-pederson-logo.png`,
+  logo: `${site.url}/apple-icon.png`,
   image: `${site.url}/opengraph-image`,
   description: site.description,
   slogan: site.promise,
