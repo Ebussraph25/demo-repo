@@ -5,10 +5,18 @@ export const propertyTypes = ["House", "Apartment", "Condo", "Office", "Retail",
 export const budgets = ["Under $25,000", "$25,000–$50,000", "$50,000–$100,000", "$100,000–$250,000", "$250,000–$500,000", "$500,000+", "Not sure yet"] as const;
 export const timelines = ["Immediately", "1–3 months", "3–6 months", "6–12 months", "More than one year", "Flexible"] as const;
 
-/** Upload limits sized to stay under Vercel's 4.5 MB serverless request limit. */
+/**
+ * How enquiries are delivered:
+ *  - "formsubmit" (default): no setup — the browser posts straight to FormSubmit, which emails
+ *    alfredpederson02@gmail.com and sends the client an automatic confirmation.
+ *  - "server": our own /api/enquiry route (Gmail app password / Resend / n8n webhook).
+ */
+export const ENQUIRY_MODE: "formsubmit" | "server" = process.env.NEXT_PUBLIC_ENQUIRY_MODE === "server" ? "server" : "formsubmit";
+
+/** FormSubmit allows 10 MB of attachments; our own route stays under Vercel's 4.5 MB request limit. */
 export const UPLOAD = {
   maxFiles: 3,
-  maxTotalBytes: 4 * 1024 * 1024,
+  maxTotalBytes: (ENQUIRY_MODE === "server" ? 4 : 10) * 1024 * 1024,
   types: { "application/pdf": "pdf", "image/jpeg": "jpg", "image/png": "png" } as Record<string, string>,
   accept: ".pdf,.jpg,.jpeg,.png",
 };

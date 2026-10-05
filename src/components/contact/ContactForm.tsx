@@ -1,14 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { budgets, enquirySchema, projectTypes, propertyTypes, timelines, UPLOAD, type FieldErrors } from "@/lib/enquiry";
+import { budgets, enquirySchema, ENQUIRY_MODE, projectTypes, propertyTypes, timelines, UPLOAD, type FieldErrors } from "@/lib/enquiry";
+import { site } from "@/lib/site";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-export function ContactForm({ defaultProjectType }: { defaultProjectType?: string }) {
-  const [status, setStatus] = useState<Status>("idle");
+const MB = Math.round(UPLOAD.maxTotalBytes / 1024 / 1024);
+
+export function ContactForm({ defaultProjectType, sent = false }: { defaultProjectType?: string; sent?: boolean }) {
+  const [status, setStatus] = useState<Status>(sent ? "success" : "idle");
   const [errors, setErrors] = useState<FieldErrors>({});
   const [serverError, setServerError] = useState("");
   const [files, setFiles] = useState<File[]>([]);
@@ -24,10 +27,22 @@ export function ContactForm({ defaultProjectType }: { defaultProjectType?: strin
     if (status === "success") successRef.current?.focus();
   }, [status]);
 
+  // If the visitor comes Back from the FormSubmit page, re-enable the form.
+  useEffect(() => {
+    const onShow = (e: PageTransitionEvent) => e.persisted && setStatus((s) => (s === "submitting" ? "idle" : s));
+    window.addEventListener("pageshow", onShow);
+    return () => window.removeEventListener("pageshow", onShow);
+  }, []);
+
+  // Returning from FormSubmit (?sent=1) — record the conversion once.
+  useEffect(() => {
+    if (sent) trackEvent("generate_lead", { event_category: "enquiry" });
+  }, [sent]);
+
   const validateFiles = (list: File[]) => {
     if (list.length > UPLOAD.maxFiles) return `Please attach up to ${UPLOAD.maxFiles} files.`;
     if (list.some((f) => !UPLOAD.types[f.type])) return "Only PDF, JPG and PNG files are accepted.";
-    if (list.reduce((s, f) => s + f.size, 0) > UPLOAD.maxTotalBytes) return "Attachments must total 4 MB or less. You can share larger files by email.";
+    if (list.reduce((s, f) => s + f.size, 0) > UPLOAD.maxTotalBytes) return `Attachments must total ${MB} MB or less. You can share larger files by email.`;
     return undefined;
   };
 
@@ -66,6 +81,12 @@ export function ContactForm({ defaultProjectType }: { defaultProjectType?: strin
       setErrors(next);
       const first = Object.keys(next)[0];
       form.querySelector<HTMLElement>(`[name="${first === "files" ? "attachments" : first}"]`)?.focus();
+      return;
+    }
+
+    if (ENQUIRY_MODE === "formsubmit") {
+      submitToFormSubmit(values, files, String(fd.get("company_website") || ""));
+      setStatus("submitting");
       return;
     }
 
@@ -189,7 +210,7 @@ export function ContactForm({ defaultProjectType }: { defaultProjectType?: strin
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6 text-bronze" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3" /></svg>
           <span className="text-sm text-ink">{files.length ? files.map((f) => f.name).join(", ") : "Click to choose files"}</span>
-          <span className="text-xs text-stone-ink">PDF, JPG or PNG · up to 3 files · 4 MB total</span>
+          <span className="text-xs text-stone-ink">PDF, JPG or PNG · up to 3 files · {MB} MB total</span>
           <input
             id="attachments"
             name="attachments"
@@ -234,6 +255,71 @@ export function ContactForm({ defaultProjectType }: { defaultProjectType?: strin
       </div>
     </form>
   );
+}
+
+/** Readable labels so the email Alfred receives is easy to scan. */
+const LABELS: [string, string][] = [
+  ["fullName", "Name"], ["email", "email"], ["phone", "Phone"], ["location", "Project Location"],
+  ["projectType", "Project Type"], ["propertyType", "Property Type"], ["budget", "Estimated Budget"],
+  ["timeline", "Desired Start"], ["message", "Project Details"],
+];
+
+const AUTORESPONSE =
+  "Thank you for contacting Alfred Pederson. We've received your project enquiry and appreciate the opportunity to learn more about your project. " +
+  "The information you provided will be reviewed, and we'll contact you regarding the appropriate next steps. We look forward to learning more about your vision. " +
+  `— Alfred Pederson · ${site.phoneDisplay} · ${site.email}`;
+
+/**
+ * Builds a standard multipart form and posts it to FormSubmit (a normal form post, so the
+ * client's confirmation email and attachments work). FormSubmit shows a quick "I'm not a robot"
+ * check, emails the enquiry, then returns the visitor to /contact?sent=1.
+ */
+function submitToFormSubmit(values: Record<string, string>, files: File[], honeypot: string) {
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = `https://formsubmit.co/${site.email}`;
+  form.enctype = "multipart/form-data";
+  form.style.display = "none";
+
+  const add = (name: string, value: string) => {
+    const i = document.createElement("input");
+    i.type = "hidden";
+    i.name = name;
+    i.value = value;
+    form.appendChild(i);
+  };
+
+  add("_subject", `New enquiry: ${values.projectType} — ${values.fullName}`);
+  add("_template", "table");
+  add("_next", `${window.location.origin}/contact?sent=1#enquiry`);
+  add("_autoresponse", AUTORESPONSE);
+  add("_replyto", values.email);
+  add("_honey", honeypot);
+  for (const [k, label] of LABELS) add(label, values[k] || "—");
+
+  // Lead source details (PRD §52)
+  try {
+    const utm = JSON.parse(sessionStorage.getItem("ap-utm") || "{}") as Record<string, string>;
+    const ref = sessionStorage.getItem("ap-ref") || document.referrer;
+    add("Lead Source", utm.utm_source || (ref ? new URL(ref).hostname : "Direct / website"));
+    for (const [k, v] of Object.entries(utm)) add(k, v);
+  } catch {
+    add("Lead Source", "Direct / website");
+  }
+  add("Submitted", new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" }) + " PT");
+
+  files.forEach((f, i) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.name = `attachment${i + 1}`;
+    const dt = new DataTransfer();
+    dt.items.add(f);
+    input.files = dt.files;
+    form.appendChild(input);
+  });
+
+  document.body.appendChild(form);
+  form.submit();
 }
 
 function Field({ label, required, htmlFor, children, className }: { label: string; required?: boolean; htmlFor: string; children: React.ReactNode; className?: string }) {

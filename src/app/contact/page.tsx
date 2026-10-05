@@ -11,7 +11,7 @@ export const metadata = pageMeta({
 });
 
 export default async function ContactPage({ searchParams }: PageProps<"/contact">) {
-  const { type } = await searchParams;
+  const { type, sent } = await searchParams;
   const preset = typeof type === "string" && (projectTypes as readonly string[]).includes(type) ? type : undefined;
 
   const channels = [
@@ -45,7 +45,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
+      <section id="enquiry" className="scroll-mt-24 py-20 md:py-28">
         <div className="container-x grid gap-16 lg:grid-cols-12">
           <aside className="lg:col-span-4">
             <div className="lg:sticky lg:top-32">
@@ -59,7 +59,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
             </div>
           </aside>
           <div className="lg:col-span-7 lg:col-start-6">
-            <ContactForm defaultProjectType={preset} />
+            <ContactForm defaultProjectType={preset} sent={sent === "1"} />
           </div>
         </div>
       </section>

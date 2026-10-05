@@ -2,7 +2,7 @@
 
 Premium architecture, building & interior design website built from the Alfred Pederson PRD.
 
-**Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · Gmail SMTP via Nodemailer (email) · Zod (validation)
+**Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · FormSubmit (email, no setup) · Zod (validation)
 Fonts are self-hosted (Cormorant Garamond + Manrope). Everything is statically pre-rendered except the contact page and the enquiry API.
 
 ## Quick start
@@ -14,7 +14,7 @@ npm run dev                  # http://localhost:3000
 npm run build && npm start   # production build
 ```
 
-In development, enquiries without `GMAIL_APP_PASSWORD` are logged to the terminal so you can test the form.
+Note: the first live enquiry needs a one-time confirmation click in the Gmail inbox (see Email below).
 
 ## Deploy (Vercel)
 
@@ -22,19 +22,18 @@ In development, enquiries without `GMAIL_APP_PASSWORD` are logged to the termina
 2. Add environment variables from `.env.example` in **Project → Settings → Environment Variables**.
 3. Add your custom domain and set `NEXT_PUBLIC_SITE_URL` to it.
 
-### Email setup (required before launch)
-Enquiries are sent **from and to alfredpederson02@gmail.com** using Gmail — no domain or third-party account needed.
+### Email (works with no setup)
+The enquiry form delivers through **FormSubmit** straight to **alfredpederson02@gmail.com** — no account, password or domain.
 
-1. Sign in to the Gmail account → Google Account → **Security** → turn on **2-Step Verification**.
-2. Open https://myaccount.google.com/apppasswords, create an app password named "Website" and copy the 16-character code.
-3. In Vercel, set `GMAIL_APP_PASSWORD` to that code (and `GMAIL_USER=alfredpederson02@gmail.com`). Redeploy.
+- **One-time step:** the very first enquiry sent from the live site triggers a FormSubmit email to alfredpederson02@gmail.com asking to confirm the address. Click the link once; every enquiry after that arrives normally. (Send a test enquiry yourself right after launch.)
+- Each enquiry arrives as a neat table with up to 3 attachments (10 MB), and **Reply** goes to the client.
+- The client automatically gets a confirmation email (PRD §53).
+- Visitors pass a quick "I'm not a robot" check, then return to the site's thank-you message.
 
-Each enquiry arrives in the inbox with attachments, and **Reply** goes straight to the client. The client automatically receives the PRD §53 confirmation email from the same address. Gmail allows roughly 500 sends per day, far more than an enquiry form needs. (Resend is still supported as an alternative if you later move to a custom domain.)
-
-If email isn't configured in production, the form shows a friendly error with the phone/email fallback instead of silently dropping the lead.
+**Advanced (optional):** set `NEXT_PUBLIC_ENQUIRY_MODE=server` to use the built-in `/api/enquiry` route instead (sends via a Gmail app password or Resend, supports the n8n webhook below).
 
 ### Optional: CRM / automation
-Set `LEAD_WEBHOOK_URL` (e.g. an n8n Webhook node) to receive every lead as JSON: name, email, phone, location, project type, property type, budget, timeline, description, attachment names, submittedAt, leadSource, referrer, page and UTM fields (PRD §52). Optional `LEAD_WEBHOOK_SECRET` is sent as `X-Webhook-Secret`.
+With `NEXT_PUBLIC_ENQUIRY_MODE=server`, set `LEAD_WEBHOOK_URL` (e.g. an n8n Webhook node) to receive every lead as JSON: name, email, phone, location, project type, property type, budget, timeline, description, attachment names, submittedAt, leadSource, referrer, page and UTM fields (PRD §52). Optional `LEAD_WEBHOOK_SECRET` is sent as `X-Webhook-Secret`.
 
 ### Analytics
 Set `NEXT_PUBLIC_GA_ID` (GA4). GA loads **only after cookie consent**. Events tracked automatically:
