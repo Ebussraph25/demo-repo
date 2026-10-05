@@ -189,8 +189,10 @@
 }
 .reveal.is-in { opacity: 1; transform: none; }
 
-.reveal-img { clip-path: inset(100% 0 0 0); transition: clip-path 1.4s var(--ease-arch); transition-delay: var(--d, 0ms); }
-.reveal-img.is-in { clip-path: inset(0 0 0 0); }
+/* Clip the children, never the observed element itself — a fully clipped target
+   has zero visible area, so IntersectionObserver would never report it. */
+.reveal-img > * { clip-path: inset(100% 0 0 0); transition: clip-path 1.4s var(--ease-arch); transition-delay: var(--d, 0ms); }
+.reveal-img.is-in > * { clip-path: inset(0 0 0 0); }
 
 .zoom-wrap { overflow: hidden; }
 .zoom-wrap img { transition: transform 1.2s var(--ease-arch); }
@@ -250,6 +252,6 @@
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-delay: 0s !important; transition-delay: 0s !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal { opacity: 1; transform: none; }
-  .reveal-img { clip-path: none; }
+  .reveal-img > * { clip-path: none; }
   .loader { display: none; }
 }
