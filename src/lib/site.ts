@@ -12,9 +12,6 @@ export const site = {
   phoneDisplay: "+1 213-478-5730",
   phoneHref: "tel:+12134785730",
   email: "alfredpederson02@gmail.com",
-  whatsappNumber: "12134785730",
-  whatsappMessage:
-    "Hello Alfred Pederson, I'm interested in discussing a building or interior design project.",
   // Only list platforms the business actively maintains (PRD §50). Leave empty strings to hide.
   social: {
     instagram: "",
@@ -26,7 +23,6 @@ export const site = {
   } as Record<string, string>,
 };
 
-export const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(site.whatsappMessage)}`;
 export const mailHref = `mailto:${site.email}`;
 
 export const nav = [

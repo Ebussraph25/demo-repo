@@ -47,7 +47,6 @@ export function Analytics() {
       const explicit = a.dataset.track;
       if (href.startsWith("tel:")) trackEvent("phone_click", { location: window.location.pathname });
       else if (href.startsWith("mailto:")) trackEvent("email_click", { location: window.location.pathname });
-      else if (href.includes("wa.me")) trackEvent("whatsapp_start", { location: window.location.pathname });
       if (explicit) trackEvent(explicit, { location: window.location.pathname, label: a.textContent?.trim() });
     };
     document.addEventListener("click", onClick);

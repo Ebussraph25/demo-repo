@@ -37,14 +37,14 @@ With `NEXT_PUBLIC_ENQUIRY_MODE=server`, set `LEAD_WEBHOOK_URL` (e.g. an n8n Webh
 
 ### Analytics
 Set `NEXT_PUBLIC_GA_ID` (GA4). GA loads **only after cookie consent**. Events tracked automatically:
-`generate_lead`, `phone_click`, `whatsapp_start`, `email_click`, `consultation_cta`, `project_case_study_view`, `project_card_click`. Mark `generate_lead` as a key event in GA4.
+`generate_lead`, `phone_click`, `email_click`, `consultation_cta`, `project_case_study_view`, `project_card_click`. Mark `generate_lead` as a key event in GA4.
 For Search Console, set `GOOGLE_SITE_VERIFICATION` or verify via DNS, then submit `/sitemap.xml`.
 
 ## Editing content (no design code needed)
 
 | What | File |
 |---|---|
-| Phone, email, WhatsApp, social links | `src/lib/site.ts` |
+| Phone, email, social links | `src/lib/site.ts` |
 | Projects / case studies (PRD §48 fields) | `src/content/projects.ts` |
 | Services | `src/content/services.ts` |
 | Articles | `src/content/articles.ts` |
@@ -62,7 +62,7 @@ The content files follow the PRD CMS structures, so they map 1:1 onto Sanity/Con
 ## What's included
 - Pages: Home (PRD §59 order), About, Services + 6 service pages, Projects (filterable) + 8 case studies with lightbox gallery, Process (10 stages), Insights + 8 articles, Contact, Privacy, Terms, Accessibility, Cookie Policy, branded 404.
 - Vector logo recreated from the supplied mark (`src/components/brand/Logo.tsx`); original PNG in `public/brand/`.
-- Sticky header (transparent over images → solid on scroll), full-screen mobile menu, floating WhatsApp with prefilled message, click-to-call everywhere.
+- Sticky header (transparent over images → solid on scroll), full-screen mobile menu, click-to-call everywhere.
 - Enquiry form: all PRD §28 fields, PDF/JPG/PNG uploads (3 files / 4 MB), inline validation, consent checkbox, success state.
 - Security: server-side Zod validation, field allow-listing, file signature (magic-byte) checks, honeypot + timing spam trap, per-IP rate limiting, HTML-escaped emails, security headers (HSTS, nosniff, frame options, referrer, permissions).
 - SEO: per-page titles/descriptions/canonicals/OG, generated OG image, sitemap.xml, robots.txt, JSON-LD (Organization/HomeAndConstructionBusiness, Service, Article, CreativeWork, Breadcrumb, ContactPage).

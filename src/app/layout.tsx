@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
-import { WhatsAppFloat } from "@/components/site/WhatsAppFloat";
 import { RevealObserver } from "@/components/site/RevealObserver";
 import { Analytics } from "@/components/site/Analytics";
 import { JsonLd } from "@/components/ui";
@@ -71,7 +70,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main id="main" className="flex-1">{children}</main>
         <Footer />
-        <WhatsAppFloat />
         <RevealObserver />
         <Analytics />
         <JsonLd data={orgSchema} />

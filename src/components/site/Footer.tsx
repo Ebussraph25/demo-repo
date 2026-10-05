@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Monogram } from "@/components/brand/Logo";
 import { services } from "@/content/services";
-import { mailHref, site, whatsappHref } from "@/lib/site";
+import { mailHref, site } from "@/lib/site";
 
 const explore = [
   { label: "Home", href: "/" },
@@ -56,7 +56,6 @@ export function Footer() {
           <FooterCol title="Contact" className="lg:col-span-3">
             <li><a href={site.phoneHref} className="hover:text-white">{site.phoneDisplay}</a></li>
             <li><a href={mailHref} className="hover:text-white">{site.email}</a></li>
-            <li><a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="hover:text-white">WhatsApp</a></li>
           </FooterCol>
 
           <FooterCol title="Legal" className="lg:col-span-2">

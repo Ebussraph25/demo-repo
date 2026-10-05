@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
-import { nav, site, whatsappHref } from "@/lib/site";
+import { nav, site } from "@/lib/site";
 import { cn } from "@/lib/cn";
 
 const LIGHT_PAGES = ["/projects", "/insights", "/contact", "/privacy-policy", "/terms", "/accessibility", "/cookie-policy"];
@@ -143,9 +143,6 @@ export function Header() {
           <div className="mt-8 grid gap-3 pb-10 text-sm">
             <a href={site.phoneHref} className="text-beige hover:text-white">
               {site.phoneDisplay}
-            </a>
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="text-beige hover:text-white">
-              WhatsApp
             </a>
             <Link href="/contact" onClick={() => setOpen(false)} className="btn btn-solid-light mt-4 w-full">
               Start Your Project

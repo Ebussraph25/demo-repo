@@ -1,4 +1,4 @@
-import { mailHref, site, whatsappHref } from "@/lib/site";
+import { mailHref, site } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 import { projectTypes } from "@/lib/enquiry";
 import { FAQ, JsonLd } from "@/components/ui";
@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/contact/ContactForm";
 
 export const metadata = pageMeta({
   title: "Contact — Start Your Project",
-  description: "Tell us about your project, property and vision. Call, WhatsApp or email Alfred Pederson, or submit a project enquiry.",
+  description: "Tell us about your project, property and vision. Call or email Alfred Pederson, or submit a project enquiry.",
   path: "/contact",
 });
 
@@ -16,7 +16,6 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
 
   const channels = [
     { label: "Phone", value: site.phoneDisplay, href: site.phoneHref, note: "Speak With Alfred" },
-    { label: "WhatsApp", value: site.phoneDisplay, href: whatsappHref, note: "Message us anytime", external: true },
     { label: "Email", value: site.email, href: mailHref, note: "We reply to every enquiry" },
   ];
 
@@ -35,7 +34,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
             {channels.map((c) => (
               <li key={c.label} className="border-t border-charcoal/15 pt-5">
                 <p className="eyebrow text-stone-ink">{c.label}</p>
-                <a href={c.href} {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})} className="mt-2 block break-all font-serif text-2xl hover:text-bronze md:text-3xl">
+                <a href={c.href} className="mt-2 block break-all font-serif text-2xl hover:text-bronze md:text-3xl">
                   {c.value}
                 </a>
                 <p className="mt-1 text-xs text-stone-ink">{c.note}</p>
