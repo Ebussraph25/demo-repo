@@ -13,6 +13,8 @@ const sectors = [
   { title: "Workplace", text: "Headquarters and offices that welcome clients and support teams.", img: photo("executive-headquarters", 2), alt: "Executive client bar with stone island and city views" },
   { title: "Learning", text: "Bright, safe and inspiring environments for early learning and education.", img: photo("treehouse-early-learning"), alt: "Learning space with sculptural timber reading tree" },
   { title: "Hospitality & Community", text: "Dining, gathering and civic spaces designed for people to linger.", img: photo("community-dining-hall"), alt: "Dining hall with rattan pendants and timber ceiling" },
+  { title: "Wellness & Leisure", text: "Private pools, spas and retreats designed for rest and renewal.", img: photo("gabled-wellness-house", 2), alt: "Indoor pool hall under timber portal frames with a glazed gable" },
+  { title: "Urban & Mixed-Use", text: "Towers, precincts and mixed-use buildings that add life to the city.", img: photo("lattice-tower", 2), alt: "Slender tower with a terracotta diagrid and vertical gardens" },
 ];
 
 const materials = [
@@ -23,7 +25,7 @@ const materials = [
 ];
 
 export default function Home() {
-  const featuredSlugs = ["executive-headquarters", "courtyard-house", "glasshouse-loft", "treehouse-early-learning", "city-workplace", "color-studies-residence"];
+  const featuredSlugs = ["ridgeline-retreat", "executive-headquarters", "curve-house", "gabled-wellness-house", "courtyard-house", "arc-early-learning", "pink-column-workplace", "color-studies-residence"];
   const featured = featuredSlugs.map((s) => getProject(s)!).filter(Boolean);
   const caseStudy = getProject("woven-pavilion")!;
   const band = [...allPhotos, ...allPhotos];
@@ -115,8 +117,8 @@ export default function Home() {
           </div>
           <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 md:gap-y-24 lg:grid-cols-12">
             {featured.map((p, i) => {
-              const layout = ["lg:col-span-7", "lg:col-span-5 lg:mt-40", "lg:col-span-5", "lg:col-span-7 lg:mt-24", "lg:col-span-6", "lg:col-span-6 lg:mt-32"][i];
-              const aspect = ["aspect-[5/4]", "aspect-[4/5]", "aspect-[4/5]", "aspect-[5/4]", "aspect-[4/3]", "aspect-[4/3]"][i];
+              const layout = ["lg:col-span-7", "lg:col-span-5 lg:mt-40", "lg:col-span-5", "lg:col-span-7 lg:mt-24"][i % 4];
+              const aspect = ["aspect-[5/4]", "aspect-[4/5]", "aspect-[4/5]", "aspect-[5/4]"][i % 4];
               return (
                 <div key={p.slug} className={layout}>
                   <ProjectCard project={p} aspect={aspect} />
@@ -134,11 +136,11 @@ export default function Home() {
             <div className="lg:col-span-7"><SectionHeader eyebrow="Sectors" title="Spaces We Design" /></div>
             <p className="reveal self-end text-lg leading-relaxed text-ink/75 lg:col-span-4 lg:col-start-9">One studio, one standard of care — applied across the places people live, work, learn and gather.</p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {sectors.map((s, i) => (
               <Link key={s.title} href="/projects" className="group relative block aspect-[3/4] overflow-hidden bg-charcoal text-white" style={{ ["--d" as string]: `${i * 100}ms` }}>
                 <div className="zoom-wrap absolute inset-0">
-                  <Image src={s.img} alt={s.alt} fill sizes="(min-width:1024px) 25vw, (min-width:640px) 50vw, 100vw" className="object-cover opacity-85" />
+                  <Image src={s.img} alt={s.alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover opacity-85" />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 md:p-7">
@@ -282,7 +284,7 @@ export default function Home() {
           <SectionHeader eyebrow="Gallery" title="In the Details" />
           <Link href="/projects" className="text-link reveal shrink-0">Browse the Portfolio <Arrow /></Link>
         </div>
-        <div className="gallery-band flex w-max gap-4 md:gap-6">
+        <div className="gallery-band flex w-max gap-4 md:gap-6" style={{ animationDuration: `${allPhotos.length * 4}s` }}>
           {band.map((g, i) => (
             <Link
               key={g.src + i}

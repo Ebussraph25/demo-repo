@@ -23,7 +23,7 @@ export const services: Service[] = [
     offerings: ["Concept development", "Floor planning", "Space planning", "Residential architecture", "Building layouts", "Exterior concepts", "Design development"],
     image: photo("woven-pavilion", 1),
     idealFor: ["New custom homes", "Major additions", "Small multi-family developments"],
-    relatedProjectSlugs: ["woven-pavilion", "courtyard-house", "bush-pavilion-house"],
+    relatedProjectSlugs: ["ridgeline-retreat", "curve-house", "lattice-tower"],
   },
   {
     slug: "interior-design",
@@ -35,7 +35,7 @@ export const services: Service[] = [
     offerings: ["Interior concepts", "Space planning", "Furniture selection", "Materials", "Color palettes", "Lighting", "Fixtures", "Styling"],
     image: photo("executive-headquarters", 3),
     idealFor: ["Whole-home interiors", "Apartments and condos", "Hospitality and workplace"],
-    relatedProjectSlugs: ["color-studies-residence", "canopy-apartment", "executive-headquarters"],
+    relatedProjectSlugs: ["color-studies-residence", "brick-gallery-house", "executive-headquarters"],
   },
   {
     slug: "residential-design",
@@ -47,7 +47,7 @@ export const services: Service[] = [
     offerings: ["Custom homes", "Apartments", "Townhouses", "Luxury residences", "Vacation properties"],
     image: photo("courtyard-house", 1),
     idealFor: ["Homeowners", "Property developers", "Real estate investors"],
-    relatedProjectSlugs: ["courtyard-house", "glasshouse-loft", "canopy-apartment"],
+    relatedProjectSlugs: ["gabled-wellness-house", "courtyard-house", "curve-house"],
   },
   {
     slug: "commercial-design",
@@ -59,7 +59,7 @@ export const services: Service[] = [
     offerings: ["Offices", "Retail environments", "Restaurants", "Hospitality", "Professional spaces"],
     image: photo("city-workplace", 1),
     idealFor: ["Corporate offices", "Restaurants and hospitality", "Retail and showrooms"],
-    relatedProjectSlugs: ["city-workplace", "community-dining-hall", "treehouse-early-learning"],
+    relatedProjectSlugs: ["pink-column-workplace", "color-hotel", "arc-early-learning"],
   },
   {
     slug: "renovation",
@@ -71,7 +71,7 @@ export const services: Service[] = [
     offerings: ["Complete home remodeling", "Kitchen renovations", "Bathroom renovations", "Living-space redesign", "Basement upgrades", "Property modernization"],
     image: photo("glasshouse-loft", 1),
     idealFor: ["Kitchens and bathrooms", "Whole-home remodels", "Investment property upgrades"],
-    relatedProjectSlugs: ["glasshouse-loft", "color-studies-residence"],
+    relatedProjectSlugs: ["glasshouse-loft", "brick-gallery-house", "laneway-workshop"],
   },
   {
     slug: "construction-consulting",
@@ -83,7 +83,7 @@ export const services: Service[] = [
     offerings: ["Design consultation", "Project planning", "Material consultation", "Contractor coordination", "Project oversight", "Design implementation advice"],
     image: photo("bush-pavilion-house", 1),
     idealFor: ["Owner-managed builds", "Developers", "Projects already in progress"],
-    relatedProjectSlugs: ["bush-pavilion-house", "executive-headquarters", "woven-pavilion"],
+    relatedProjectSlugs: ["rooftop-solar-retrofit", "health-campus", "riverside-precinct"],
   },
 ];
 
