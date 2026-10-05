@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { enquirySchema, UPLOAD, type FieldErrors } from "@/lib/enquiry";
 import { site } from "@/lib/site";
+import { mailConfigured, sendMail } from "@/lib/mailer";
 
 export const runtime = "nodejs";
 
@@ -104,12 +104,12 @@ export async function POST(req: Request) {
     submittedAt, leadSource, referrer: referrer || null, page, utm,
   };
 
-  const apiKey = process.env.RESEND_API_KEY;
+  const canEmail = mailConfigured();
   const webhook = process.env.LEAD_WEBHOOK_URL;
 
-  if (!apiKey && !webhook) {
+  if (!canEmail && !webhook) {
     if (process.env.NODE_ENV !== "production") {
-      console.info("[enquiry] No RESEND_API_KEY / LEAD_WEBHOOK_URL set — lead logged only:", lead);
+      console.info("[enquiry] No email provider / LEAD_WEBHOOK_URL set — lead logged only:", lead);
       return NextResponse.json({ ok: true });
     }
     console.error("[enquiry] Email delivery not configured");
@@ -130,9 +130,7 @@ export async function POST(req: Request) {
       );
     }
 
-    if (apiKey) {
-      const resend = new Resend(apiKey);
-      const from = process.env.RESEND_FROM || "Alfred Pederson <onboarding@resend.dev>";
+    if (canEmail) {
       const to = process.env.ENQUIRY_TO_EMAIL || site.email;
       const rows: [string, string][] = [
         ["Name", d.fullName], ["Email", d.email], ["Phone", d.phone], ["Location", d.location], ["Project type", d.projectType],
@@ -152,14 +150,13 @@ export async function POST(req: Request) {
         </div>`;
 
       tasks.push(
-        resend.emails.send({ from, to, replyTo: d.email, subject: `New enquiry: ${d.projectType} — ${d.fullName}`, html, attachments }).then((r) => { if (r.error) throw new Error(r.error.message); }),
+        sendMail({ to, replyTo: d.email, subject: `New enquiry: ${d.projectType} — ${d.fullName}`, html, attachments }),
       );
 
       // Auto-confirmation to the client (PRD §53). Failure here shouldn't fail the lead.
       const first = esc(d.fullName.split(" ")[0]);
-      resend.emails
-        .send({
-          from,
+      tasks.push(
+        sendMail({
           to: d.email,
           replyTo: site.email,
           subject: "We've Received Your Project Enquiry",
@@ -174,7 +171,8 @@ export async function POST(req: Request) {
               <p style="margin-top:28px;font-size:11px;letter-spacing:3px;color:#9B7B52">ARCHITECTURE • BUILDING • INTERIORS</p>
             </div>`,
         })
-        .catch((e) => console.error("[enquiry] confirmation email failed", e));
+        .catch((e) => console.error("[enquiry] confirmation email failed", e)),
+      );
     }
 
     await Promise.all(tasks);

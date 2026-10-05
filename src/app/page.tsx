@@ -214,7 +214,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 10 — TESTIMONIALS */}
+      {/* 10 — TESTIMONIALS (renders only when real testimonials exist) */}
+      {testimonials.length > 0 && (
       <section className="py-24 md:py-36">
         <div className="container-x">
           <SectionHeader eyebrow="Testimonials" title="What Our Clients Say" align="center" className="mb-16 md:mb-20" />
@@ -232,6 +233,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
 
       {/* 11 — INSIGHTS */}
       <section className="border-t border-line bg-white py-24 md:py-36">

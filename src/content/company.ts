@@ -30,33 +30,18 @@ export const pillars = [
   { title: "Client-Centered", text: "You remain part of the decision-making process from concept through completion." },
 ];
 
+export interface Testimonial {
+  quote: string;
+  name: string; // e.g. "Sarah R." — use only with the client's permission
+  project: string; // e.g. "Kitchen Renovation"
+  location: string; // e.g. "Pasadena, CA"
+}
+
 /**
- * PLACEHOLDER testimonials for layout purposes.
- * PRD §19: only verified testimonials should be published — replace before launch.
+ * Real client testimonials only (PRD §19). The homepage section stays hidden
+ * while this list is empty and appears automatically once entries are added.
  */
-export const testimonials = [
-  {
-    quote:
-      "Alfred understood exactly what we wanted while bringing ideas we would never have considered ourselves. The finished space feels completely different — more functional, sophisticated and comfortable.",
-    name: "Sarah & Michael R.",
-    project: "Residential Renovation",
-    location: "Los Angeles, CA",
-  },
-  {
-    quote:
-      "The process was clear from the first meeting. We always knew what was happening next, and the office now feels like a true reflection of our firm.",
-    name: "David L.",
-    project: "Executive Office",
-    location: "Santa Monica, CA",
-  },
-  {
-    quote:
-      "Every detail was considered, from the lighting to the cabinet hardware. Our kitchen is now the heart of the house.",
-    name: "Jennifer K.",
-    project: "Kitchen Renovation",
-    location: "Pasadena, CA",
-  },
-];
+export const testimonials: Testimonial[] = [];
 
 export const faqs = [
   { q: "What types of projects do you work on?", a: "We work across residential, commercial, renovation, architectural planning and interior design projects." },

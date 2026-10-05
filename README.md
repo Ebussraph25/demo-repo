@@ -2,7 +2,7 @@
 
 Premium architecture, building & interior design website built from the Alfred Pederson PRD.
 
-**Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · Resend (email) · Zod (validation)
+**Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · Gmail SMTP via Nodemailer (email) · Zod (validation)
 Fonts are self-hosted (Cormorant Garamond + Manrope). Everything is statically pre-rendered except the contact page and the enquiry API.
 
 ## Quick start
@@ -14,7 +14,7 @@ npm run dev                  # http://localhost:3000
 npm run build && npm start   # production build
 ```
 
-In development, enquiries without `RESEND_API_KEY` are logged to the terminal so you can test the form.
+In development, enquiries without `GMAIL_APP_PASSWORD` are logged to the terminal so you can test the form.
 
 ## Deploy (Vercel)
 
@@ -23,11 +23,15 @@ In development, enquiries without `RESEND_API_KEY` are logged to the terminal so
 3. Add your custom domain and set `NEXT_PUBLIC_SITE_URL` to it.
 
 ### Email setup (required before launch)
-1. Create a free account at resend.com, add and verify the domain (e.g. `alfredpederson.com`).
-2. Set `RESEND_API_KEY` and `RESEND_FROM="Alfred Pederson <hello@alfredpederson.com>"`.
-3. Enquiries go to `ENQUIRY_TO_EMAIL` (default `alfredpederson02@gmail.com`) with attachments and Reply-To set to the client. Clients automatically receive the PRD §53 confirmation email.
+Enquiries are sent **from and to alfredpederson02@gmail.com** using Gmail — no domain or third-party account needed.
 
-In production, if email isn't configured the form shows a friendly error with the phone/email fallback instead of silently dropping the lead.
+1. Sign in to the Gmail account → Google Account → **Security** → turn on **2-Step Verification**.
+2. Open https://myaccount.google.com/apppasswords, create an app password named "Website" and copy the 16-character code.
+3. In Vercel, set `GMAIL_APP_PASSWORD` to that code (and `GMAIL_USER=alfredpederson02@gmail.com`). Redeploy.
+
+Each enquiry arrives in the inbox with attachments, and **Reply** goes straight to the client. The client automatically receives the PRD §53 confirmation email from the same address. Gmail allows roughly 500 sends per day, far more than an enquiry form needs. (Resend is still supported as an alternative if you later move to a custom domain.)
+
+If email isn't configured in production, the form shows a friendly error with the phone/email fallback instead of silently dropping the lead.
 
 ### Optional: CRM / automation
 Set `LEAD_WEBHOOK_URL` (e.g. an n8n Webhook node) to receive every lead as JSON: name, email, phone, location, project type, property type, budget, timeline, description, attachment names, submittedAt, leadSource, referrer, page and UTM fields (PRD §52). Optional `LEAD_WEBHOOK_SECRET` is sent as `X-Webhook-Secret`.
@@ -52,7 +56,7 @@ The content files follow the PRD CMS structures, so they map 1:1 onto Sanity/Con
 ## ⚠️ Replace before launch
 - **Photography:** all images are Unsplash placeholders. Swap in real project photography (min 2000px wide, PRD §67) — before/after slider currently uses a simulated "before" treatment; use real before photos.
 - **Projects:** the 8 case studies are conceptual showcase content.
-- **Testimonials:** placeholders. PRD §19 — publish verified testimonials only.
+- **Testimonials:** the section is hidden until real client testimonials are added to `src/content/company.ts`; it then appears automatically.
 - **Legal pages:** general templates; have them reviewed by an attorney.
 - **Social links:** empty by default (hidden). Add only actively maintained platforms.
 
